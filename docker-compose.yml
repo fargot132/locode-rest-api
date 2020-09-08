@@ -1,0 +1,62 @@
+version: '3.7'
+
+# Services
+services:
+
+    # Nginx Service
+    nginx:
+        image: nginx:1.19-alpine
+        ports:
+            - ${NGINX_PORT}:80
+            - ${PHPMYADMIN_PORT}:8080
+        volumes:
+            - ./symfony:/var/www/symfony:ro
+            - ./.docker/nginx/conf.d:/etc/nginx/conf.d:ro
+            - phpmyadmindata:/usr/src/phpmyadmin
+        depends_on:
+            - php
+            - phpmyadmin
+      
+     # PHP Service
+    php:
+        build: ./.docker/php
+        working_dir: /var/www/symfony
+        volumes:
+            - ./symfony:/var/www/symfony
+        user: ${LOCAL_USER}
+        depends_on:
+            - mysql
+    
+    # MySQL Service
+    mysql:
+        image: mysql:8
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+        volumes:
+            - ./.docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+            - mysqldata:/var/lib/mysql
+            
+    # PhpMyAdmin Service
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:5-fpm-alpine
+        environment:
+          PMA_HOST: mysql
+        volumes:
+            - phpmyadmindata:/usr/src/phpmyadmin
+        depends_on:
+          - mysql
+    
+    # Scheduler Service
+    scheduler:
+      image: mcuadros/ofelia:latest
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock:ro
+        - ./.docker/scheduler/config.ini:/etc/ofelia/config.ini
+      depends_on:
+        - php
+            
+# Volumes
+volumes:
+    mysqldata:
+    phpmyadmindata:
