@@ -25,5 +25,13 @@ class CsvImportFromDir
             $csv->import();
         }
         
+        $q = "DELETE FROM location WHERE type = 'old'";
+        $this->em->getConnection()->exec($q);
+        $q = "DELETE FROM country WHERE type = 'old'";
+        $this->em->getConnection()->exec($q);
+        $q = "UPDATE country SET type = 'old' WHERE type = 'new'";
+        $this->em->getConnection()->exec($q);
+        $q = "UPDATE location SET type = 'old' WHERE type = 'new'";
+        $this->em->getConnection()->exec($q);
     }
 }

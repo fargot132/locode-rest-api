@@ -3,6 +3,8 @@
 namespace App\Command;
 
 use App\Entity\Country;
+use App\Entity\CountryImport;
+use App\Entity\LocationImport;
 use App\Entity\Location;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
@@ -53,7 +55,7 @@ class CsvImportFromFile
     
     private function buildCountry (array $record) : Country
     {
-        $country = (new Country())
+        $country = (new CountryImport())
             ->setCode($record['1'])
             ->setName($this->convertEncoding($record['3']));
         return $country;
@@ -61,7 +63,7 @@ class CsvImportFromFile
     
     private function buildLocation (array $record) : Location
     {
-         $location = (new Location())
+         $location = (new LocationImport())
             ->setCode($record['2'])
             ->setName($this->convertEncoding($record['3']))
             ->setNameWoDiacritics($this->convertEncoding($record['4']))

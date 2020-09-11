@@ -37,6 +37,7 @@ class CsvImportCommand extends Command
                 
         $csv = new CsvImportFromDir($this->entityManager,$this->kernel->getProjectDir().'/src/Data/');
         $csv->import();
+        
 
         $io->success('Command exited cleanly!');
         

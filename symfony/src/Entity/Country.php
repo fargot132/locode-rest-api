@@ -6,9 +6,16 @@ use App\Repository\CountryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="country", indexes={@ORM\Index(name="type_idx", columns={"type"})})
+ * @ORM\DiscriminatorColumn(name="type", type="string", length=3)
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorMap({
+ *     "old" = "CountryProd",
+ *     "new" = "CountryImport",
+ * })
  * @ORM\Entity(repositoryClass=CountryRepository::class)
  */
-class Country
+abstract class Country
 {
     /**
      * @ORM\Id

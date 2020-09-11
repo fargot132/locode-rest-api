@@ -6,9 +6,16 @@ use App\Repository\LocationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="location", indexes={@ORM\Index(name="type_idx", columns={"type"})})
+ * @ORM\DiscriminatorColumn(name="type", type="string", length=3)
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorMap({
+ *     "old" = "LocationProd",
+ *     "new" = "LocationImport",
+ * })
  * @ORM\Entity(repositoryClass=LocationRepository::class)
  */
-class Location
+abstract class Location
 {
     /**
      * @ORM\Id
