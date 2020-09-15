@@ -31,7 +31,7 @@ class ApiController extends AbstractController
         if ($location) {
             return new JsonResponse($location->getLocationData(), Response::HTTP_OK);
         } else {
-            return new JsonResponse(null,Response::HTTP_NOT_FOUND);
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
         }
     }
     
@@ -45,14 +45,12 @@ class ApiController extends AbstractController
         
         if ($locations) {
             $data = [];
-            foreach ($locations as $location){
+            foreach ($locations as $location) {
                 $data[] = $location->getLocationData();
             }
             return new JsonResponse($data, Response::HTTP_OK);
         } else {
-            return new JsonResponse(null,Response::HTTP_NOT_FOUND);
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
         }
     }
-    
-    
 }

@@ -16,12 +16,12 @@ class CsvImportFromDir
         $this->dir = $dir;
     }
     
-    public function import() : bool
+    public function import(): bool
     {
         $counter = 0;
         $finder = new Finder();
         $finder->name('*UNLOCODE*.csv');
-        foreach ($finder->in($this->dir) as $file){
+        foreach ($finder->in($this->dir) as $file) {
             $csv = new CsvImportFromFile($this->em, $file);
             $counter += $csv->import();
         }

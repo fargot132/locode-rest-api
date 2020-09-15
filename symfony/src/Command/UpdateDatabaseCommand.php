@@ -26,7 +26,7 @@ class UpdateDatabaseCommand extends Command
         $this->entityManager = $em;
         $this->kernel = $appKernel;
         $this->zipFileName = 'Download.zip';
-        $this->dir = $this->kernel->getProjectDir().'/src/Data/';
+        $this->dir = $this->kernel->getProjectDir() . '/src/Data/';
     }
     
     public function setURL(string $url)
@@ -55,21 +55,18 @@ class UpdateDatabaseCommand extends Command
                 ->getLastUpdate();
         
         $status = false;
-        if ( $lastUpdate === null || $fileDate > ($lastUpdate->getFileDate()))
-        {
+        if ($lastUpdate === null || $fileDate > ($lastUpdate->getFileDate())) {
             $status = $curl->downloadToFile($this->dir . $this->zipFileName);
         }
         
-        if ($status)
-        {
+        if ($status) {
             $status = $this->unzipFile();
         }
         
-        if ($status)
-        {
-            $csv = new CsvImportFromDir($this->entityManager,$this->dir);
+        if ($status) {
+            $csv = new CsvImportFromDir($this->entityManager, $this->dir);
             $status = $csv->import();
-        }    
+        }
         
         $this->deleteFiles();
         $this->writeToLog($status, $fileDate);
@@ -96,19 +93,19 @@ class UpdateDatabaseCommand extends Command
         $finder->name('*.csv')
                 ->name('*.pdf')
                 ->name('*.zip');
-        foreach ($finder->in($this->dir) as $file){
+        foreach ($finder->in($this->dir) as $file) {
             unlink($file);
         }
     }
     
-    private function unzipFile() : bool
+    private function unzipFile(): bool
     {
         $zip = new \ZipArchive();
         if ($zip->open($this->dir . $this->zipFileName) === true) {
             $zip->extractTo($this->dir);
             $zip->close();
             return true;
-        } 
+        }
         
         return false;
     }

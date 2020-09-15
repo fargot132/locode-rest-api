@@ -23,7 +23,7 @@ class LocationProdRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('location')
             ->andWhere('location.nameWoDiacritics like :name')
-            ->setParameter('name', '%'.$name.'%')
+            ->setParameter('name', '%' . $name . '%')
             ->setMaxResults(100)
             ->getQuery()
             ->getResult()
@@ -41,10 +41,9 @@ class LocationProdRepository extends ServiceEntityRepository
             ->setParameter('locationCode', $locationCode)
             ->join('location.country', 'country')
             ->andWhere('country.code = :countryCode')
-            ->setParameter('countryCode', $countryCode) 
+            ->setParameter('countryCode', $countryCode)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    
 }

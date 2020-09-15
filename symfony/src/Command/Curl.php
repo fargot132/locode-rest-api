@@ -2,9 +2,9 @@
 
 namespace App\Command;
 
-
 class Curl
-{   
+{
+
     private $curlHandle;
     private $url;
     
@@ -14,7 +14,7 @@ class Curl
         $this->curlHandle = null;
     }
     
-    public function getFileDateTime() : ?\DateTime
+    public function getFileDateTime(): ?\DateTime
     {
         $this->curlHandle = curl_init($this->url);
         $this->setHeaderOptions();
@@ -32,7 +32,7 @@ class Curl
     
     private function setHeaderOptions(bool $value = true)
     {
-        if ($this->curlHandle){
+        if ($this->curlHandle) {
             //don't fetch the actual page, you only want headers
             curl_setopt($this->curlHandle, CURLOPT_NOBODY, $value);
             curl_setopt($this->curlHandle, CURLOPT_HEADER, $value);

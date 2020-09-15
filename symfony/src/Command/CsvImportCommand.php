@@ -35,7 +35,7 @@ class CsvImportCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->title('Attempting import of LOCODE database...');
                 
-        $csv = new CsvImportFromDir($this->entityManager,$this->kernel->getProjectDir().'/src/Data/');
+        $csv = new CsvImportFromDir($this->entityManager, $this->kernel->getProjectDir() . '/src/Data/');
         $csv->import();
         
         $io->success('Import finished');

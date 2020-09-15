@@ -6,7 +6,7 @@ use App\Repository\LocationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="location", indexes={@ORM\Index(name="type_idx", columns={"type"}), 
+ * @ORM\Table(name="location", indexes={@ORM\Index(name="type_idx", columns={"type"}),
  *      @ORM\Index(name="code_idx", columns={"code"})})
  * @ORM\DiscriminatorColumn(name="type", type="string", length=3)
  * @ORM\InheritanceType("SINGLE_TABLE")
@@ -366,5 +366,4 @@ abstract class Location
 
         return $this;
     }
-    
 }

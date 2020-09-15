@@ -20,9 +20,9 @@ class CsvImportFromFile
         $this->fileName = $file;
     }
     
-    public function import() 
+    public function import()
     {
-        $reader = Reader::createFromPath($this->fileName,'r');
+        $reader = Reader::createFromPath($this->fileName, 'r');
         $records = $reader->getRecords();
         $counter = 0;
         
@@ -30,7 +30,7 @@ class CsvImportFromFile
                 
         foreach ($records as $offset => $record) {
             if (empty($record['2']) && !empty($record['1'])) {
-                if (strpos($record['3'],'.') === 0) {
+                if (strpos($record['3'], '.') === 0) {
                     $this->em->clear();
                     $country = null;
                     // create new country
@@ -59,15 +59,15 @@ class CsvImportFromFile
         return $counter;
     }
     
-    private function buildCountry (array $record) : Country
+    private function buildCountry(array $record): Country
     {
         $country = (new CountryImport())
             ->setCode($record['1'])
-            ->setName($this->convertEncoding(ltrim($record['3'],'.')));
+            ->setName($this->convertEncoding(ltrim($record['3'], '.')));
         return $country;
     }
     
-    private function buildLocation (array $record) : Location
+    private function buildLocation(array $record): Location
     {
          $location = (new LocationImport())
             ->setCode($record['2'])
@@ -84,7 +84,7 @@ class CsvImportFromFile
          return $location;
     }
     
-    private function convertEncoding (string $text)
+    private function convertEncoding(string $text)
     {
         return mb_convert_encoding($text, 'UTF-8', 'ISO-8859-1');
     }

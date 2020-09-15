@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class LocationProd extends Location
 {
-    public function getLocationData() : array
+    public function getLocationData(): array
     {
         $data = [
             'locode' => $this->getCountry()->getCode() . ' ' . $this->getCode(),
