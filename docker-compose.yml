@@ -26,7 +26,7 @@ services:
         working_dir: /var/www/symfony
         volumes:
             - symfonyvolume:/var/www/symfony
-        user: ${LOCAL_USER}
+        #user: ${LOCAL_USER}
         depends_on:
             - mysql
     
