@@ -6,7 +6,8 @@ use App\Repository\CountryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="country", indexes={@ORM\Index(name="type_idx", columns={"type"})})
+ * @ORM\Table(name="country", indexes={@ORM\Index(name="type_idx", columns={"type"}),
+ *      @ORM\Index(name="code_idx", columns={"code"})})
  * @ORM\DiscriminatorColumn(name="type", type="string", length=3)
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorMap({

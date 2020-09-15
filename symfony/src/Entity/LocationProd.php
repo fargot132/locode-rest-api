@@ -22,6 +22,15 @@ class LocationProd extends Location
             'date' => $this->getDate(),
             'iata' => $this->getIata(),
             'coordinates' => $this->getCoordinates(),
+            'port' => $this->getPort(),
+            'rail' => $this->getRail(),
+            'road' => $this->getRoad(),
+            'airport' => $this->getAirport(),
+            'post' => $this->getPostoffice(),
+            'reserved1' => $this->getReserved1(),
+            'reserved2' => $this->getReserved2(),
+            'border' => $this->getBorder(),
+            'notknown' => $this->getNotknown(),
         ];
         return $data;
     }

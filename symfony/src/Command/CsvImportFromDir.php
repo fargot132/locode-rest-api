@@ -16,15 +16,26 @@ class CsvImportFromDir
         $this->dir = $dir;
     }
     
-    public function import()
+    public function import() : bool
     {
+        $counter = 0;
         $finder = new Finder();
         $finder->name('*UNLOCODE*.csv');
         foreach ($finder->in($this->dir) as $file){
             $csv = new CsvImportFromFile($this->em, $file);
-            $csv->import();
+            $counter += $csv->import();
         }
         
+        if ($counter > 0) {
+            $this->replaceOldWithNew();
+            return true;
+        }
+        
+        return false;
+    }
+    
+    private function replaceOldWithNew()
+    {
         $q = "DELETE FROM location WHERE type = 'old'";
         $this->em->getConnection()->exec($q);
         $q = "DELETE FROM country WHERE type = 'old'";

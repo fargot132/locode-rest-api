@@ -33,13 +33,12 @@ class CsvImportCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $io->title('Attempting import of Feed...');
+        $io->title('Attempting import of LOCODE database...');
                 
         $csv = new CsvImportFromDir($this->entityManager,$this->kernel->getProjectDir().'/src/Data/');
         $csv->import();
         
-
-        $io->success('Command exited cleanly!');
+        $io->success('Import finished');
         
         return 0;
     }

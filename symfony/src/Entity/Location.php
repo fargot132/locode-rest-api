@@ -6,7 +6,8 @@ use App\Repository\LocationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="location", indexes={@ORM\Index(name="type_idx", columns={"type"})})
+ * @ORM\Table(name="location", indexes={@ORM\Index(name="type_idx", columns={"type"}), 
+ *      @ORM\Index(name="code_idx", columns={"code"})})
  * @ORM\DiscriminatorColumn(name="type", type="string", length=3)
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorMap({
@@ -74,6 +75,64 @@ abstract class Location
      * @ORM\Column(type="string", length=20)
      */
     private $coordinates;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : 0})
+     */
+    private $port;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : 0})
+     */
+    private $rail;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : 0})
+     */
+    private $road;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : 0})
+     */
+    private $airport;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : 0})
+     */
+    private $postoffice;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : 0})
+     */
+    private $reserved1;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : 0})
+     */
+    private $reserved2;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : 0})
+     */
+    private $border;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : 0})
+     */
+    private $notknown;
+    
+    public function __construct()
+    {
+        $this->setPort(0);
+        $this->setRail(0);
+        $this->setRoad(0);
+        $this->setAirport(0);
+        $this->setPostoffice(0);
+        $this->setReserved1(0);
+        $this->setReserved2(0);
+        $this->setBorder(0);
+        $this->setNotknown(0);
+    }
 
     public function getId(): ?int
     {
@@ -196,6 +255,114 @@ abstract class Location
     public function setCoordinates(string $coordinates): self
     {
         $this->coordinates = $coordinates;
+
+        return $this;
+    }
+
+    public function getPort(): ?bool
+    {
+        return $this->port;
+    }
+
+    public function setPort(bool $port): self
+    {
+        $this->port = $port;
+
+        return $this;
+    }
+
+    public function getRail(): ?bool
+    {
+        return $this->rail;
+    }
+
+    public function setRail(bool $rail): self
+    {
+        $this->rail = $rail;
+
+        return $this;
+    }
+
+    public function getRoad(): ?bool
+    {
+        return $this->road;
+    }
+
+    public function setRoad(bool $road): self
+    {
+        $this->road = $road;
+
+        return $this;
+    }
+
+    public function getAirport(): ?bool
+    {
+        return $this->airport;
+    }
+
+    public function setAirport(bool $airport): self
+    {
+        $this->airport = $airport;
+
+        return $this;
+    }
+
+    public function getPostoffice(): ?bool
+    {
+        return $this->postoffice;
+    }
+
+    public function setPostoffice(bool $postoffice): self
+    {
+        $this->postoffice = $postoffice;
+
+        return $this;
+    }
+
+    public function getReserved1(): ?bool
+    {
+        return $this->reserved1;
+    }
+
+    public function setReserved1(bool $reserved1): self
+    {
+        $this->reserved1 = $reserved1;
+
+        return $this;
+    }
+
+    public function getReserved2(): ?bool
+    {
+        return $this->reserved2;
+    }
+
+    public function setReserved2(bool $reserved2): self
+    {
+        $this->reserved2 = $reserved2;
+
+        return $this;
+    }
+
+    public function getBorder(): ?bool
+    {
+        return $this->border;
+    }
+
+    public function setBorder(bool $border): self
+    {
+        $this->border = $border;
+
+        return $this;
+    }
+
+    public function getNotknown(): ?bool
+    {
+        return $this->notknown;
+    }
+
+    public function setNotknown(bool $notknown): self
+    {
+        $this->notknown = $notknown;
 
         return $this;
     }

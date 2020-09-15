@@ -24,17 +24,20 @@ class CsvImportFromFile
     {
         $reader = Reader::createFromPath($this->fileName,'r');
         $records = $reader->getRecords();
+        $counter = 0;
         
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
-        
+                
         foreach ($records as $offset => $record) {
             if (empty($record['2']) && !empty($record['1'])) {
-                $this->em->clear();
-                $country = null;
-                // create new country
-                $country = $this->buildCountry($record);
-        
-                $this->em->persist($country);
+                if (strpos($record['3'],'.') === 0) {
+                    $this->em->clear();
+                    $country = null;
+                    // create new country
+                    $country = $this->buildCountry($record);
+
+                    $this->em->persist($country);
+                }
             } else {
                 // create new location
                 $location = null;
@@ -43,6 +46,7 @@ class CsvImportFromFile
                 $this->em->persist($location);
                 
                 $location->setCountry($country);
+                ++$counter;
             }
             if (($offset % 50) === 0) {
                 $this->em->flush();
@@ -51,13 +55,15 @@ class CsvImportFromFile
         
         $this->em->flush();
         $this->em->clear();
+        
+        return $counter;
     }
     
     private function buildCountry (array $record) : Country
     {
         $country = (new CountryImport())
             ->setCode($record['1'])
-            ->setName($this->convertEncoding($record['3']));
+            ->setName($this->convertEncoding(ltrim($record['3'],'.')));
         return $country;
     }
     
@@ -69,6 +75,7 @@ class CsvImportFromFile
             ->setNameWoDiacritics($this->convertEncoding($record['4']))
             ->setSubdivision($record['5'])
             ->setFunctionCode($record['6'])
+            ->setFunction($record['6'])
             ->setStatus($record['7'])
             ->setDate($record['8'])
             ->setIata($record['9'])
