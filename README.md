@@ -27,7 +27,7 @@ once a day to check for new LOCODE database at<br />
 http://www.unece.org/cefact/codesfortrade/codes_index.html<br />
 and update if necessary.
 
-After containers run:
-docker-compose exec php bash
-php bin/console doctrine:migrations:migrate
-php bin/console update:database
+After containers run:<br />
+docker-compose exec php bash<br />
+php bin/console doctrine:migrations:migrate<br />
+php bin/console update:database<br />
