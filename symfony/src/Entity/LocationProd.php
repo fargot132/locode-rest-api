@@ -9,6 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class LocationProd extends Location
 {
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\CountryProd")
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     */
+    private $country;
+    
     public function getLocationData(): array
     {
         $data = [

@@ -9,6 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class LocationImport extends Location
 {
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\CountryImport")
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     */
+    private $country;
+    
     public function setFunction(string $function_code)
     {
         if (strpos($function_code, '1') !== false) {
